@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#087ca7" />
+  <title>Macece Resort | Day Visits, Pools & Events</title>
+  <style>
+    :root {
+      --blue: #087ca7;
+      --deep-blue: #075278;
+      --turquoise: #26a9cf;
+      --orange: #ed7628;
+      --green: #48a84e;
+      --ink: #173344;
+      --muted: #607783;
+      --cream: #fffaf2;
+      --white: #ffffff;
+      --shadow: 0 18px 50px rgba(15, 64, 88, 0.13);
+      --radius: 24px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 5;
+      background: var(--deep-blue);
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .topbar-inner {
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .topbar a { text-decoration: none; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 4;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid rgba(7, 82, 120, 0.08);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 26px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--deep-blue);
+      text-decoration: none;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      font-size: 1.25rem;
+    }
+
+    .brand img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+      border-radius: 50%;
+      background: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 27px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 650;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--orange); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 49px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 999px;
+      color: white;
+      background: var(--orange);
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 8px 20px rgba(237, 118, 40, 0.23);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: #d96018;
+    }
+
+    .button.blue {
+      background: var(--blue);
+      box-shadow: 0 8px 20px rgba(8, 124, 167, 0.2);
+    }
+
+    .button.blue:hover { background: var(--deep-blue); }
+
+    .menu-toggle {
+      display: none;
+      border: 0;
+      background: none;
+      color: var(--deep-blue);
+      font-size: 1.7rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      min-height: 620px;
+      display: grid;
+      align-items: center;
+      color: white;
+      background:
+        linear-gradient(90deg, rgba(5, 50, 76, 0.82), rgba(5, 50, 76, 0.34) 60%, rgba(5, 50, 76, 0.05)),
+        url("pool-people.jpg") center 55% / cover;
+    }
+
+    .hero-content {
+      max-width: 670px;
+      padding: 92px 0 105px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 18px;
+      color: #ffe4b9;
+      font-size: 0.79rem;
+      font-weight: 850;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--orange);
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 650px;
+      margin-bottom: 20px;
+      font-size: clamp(3.2rem, 7vw, 6rem);
+      line-height: 0.98;
+      letter-spacing: -0.065em;
+    }
+
+    .hero p {
+      max-width: 535px;
+      margin-bottom: 30px;
+      color: rgba(255,255,255,0.9);
+      font-size: 1.16rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .hero .button.outline {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: none;
+    }
+
+    .hero .button.outline:hover { background: rgba(255,255,255,0.24); }
+
+    .quick-facts {
+      position: relative;
+      z-index: 2;
+      margin-top: -46px;
+    }
+
+    .facts-card {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .fact {
+      padding: 27px 30px;
+      text-align: center;
+    }
+
+    .fact + .fact { border-left: 1px solid #e7eff1; }
+
+    .fact strong {
+      display: block;
+      color: var(--deep-blue);
+      font-size: 1.35rem;
+      letter-spacing: -0.03em;
+    }
+
+    .fact span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    section { padding: 100px 0; }
+
+    .section-heading {
+      max-width: 660px;
+      margin: 0 auto 42px;
+      text-align: center;
+    }
+
+    .section-heading .eyebrow {
+      justify-content: center;
+      color: var(--orange);
+    }
+
+    .section-heading h2 {
+      margin-bottom: 14px;
+      color: var(--deep-blue);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .section-heading p { color: var(--muted); }
+
+    .experience {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .experience-photo {
+      position: relative;
+      min-height: 470px;
+    }
+
+    .experience-photo img {
+      width: 100%;
+      height: 470px;
+      object-fit: cover;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .photo-note {
+      position: absolute;
+      right: -18px;
+      bottom: 24px;
+      max-width: 220px;
+      padding: 18px 21px;
+      border-radius: 18px;
+      color: white;
+      background: var(--blue);
+      box-shadow: var(--shadow);
+      font-weight: 750;
+    }
+
+    .experience-copy .eyebrow { color: var(--orange); }
+
+    .experience-copy h2 {
+      margin-bottom: 18px;
+      color: var(--deep-blue);
+      font-size: clamp(2.3rem, 4vw, 3.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .experience-copy p { color: var(--muted); }
+
+    .check-list {
+      display: grid;
+      gap: 13px;
+      margin: 25px 0 30px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .check-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      font-weight: 650;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      display: grid;
+      flex: 0 0 25px;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: var(--green);
+      font-size: 0.8rem;
+    }
+
+    .tickets {
+      color: white;
+      background: linear-gradient(135deg, var(--deep-blue), var(--blue));
+    }
+
+    .tickets .section-heading h2 { color: white; }
+    .tickets .section-heading p { color: rgba(255,255,255,0.78); }
+    .tickets .section-heading .eyebrow { color: #ffcb91; }
+
+    .ticket-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    .ticket-card {
+      padding: 31px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .ticket-card small {
+      display: block;
+      color: rgba(255,255,255,0.74);
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .ticket-card strong {
+      display: block;
+      margin: 9px 0 4px;
+      font-size: 3.5rem;
+      line-height: 1;
+      letter-spacing: -0.07em;
+    }
+
+    .ticket-card p {
+      margin: 0;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .ticket-note {
+      margin: 26px 0 0;
+      text-align: center;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .events {
+      background: var(--cream);
+    }
+
+    .event-card {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      object-fit: cover;
+    }
+
+    .event-copy {
+      align-self: center;
+      padding: clamp(28px, 5vw, 58px);
+    }
+
+    .event-copy .eyebrow { color: var(--orange); }
+
+    .event-copy h3 {
+      margin-bottom: 15px;
+      color: var(--deep-blue);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.05em;
+    }
+
+    .event-copy p { color: var(--muted); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 190px;
+      gap: 14px;
+    }
+
+    .gallery-grid figure {
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      border-radius: 18px;
+      background: #e8f4f7;
+    }
+
+    .gallery-grid figure:nth-child(1) { grid-column: span 7; grid-row: span 2; }
+    .gallery-grid figure:nth-child(2) { grid-column: span 5; }
+    .gallery-grid figure:nth-child(3) { grid-column: span 5; }
+    .gallery-grid figure:nth-child(n+4) { grid-column: span 4; }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-grid figure:hover img { transform: scale(1.04); }
+
+    .gallery-grid figcaption {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 28px 16px 13px;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 750;
+      background: linear-gradient(transparent, rgba(0,0,0,0.58));
+    }
+
+    .visit {
+      padding-top: 25px;
+      background: var(--cream);
+    }
+
+    .visit-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: var(--shadow);
+    }
+
+    .visit-copy { padding: clamp(30px, 5vw, 60px); }
+
+    .visit-copy .eyebrow { color: var(--orange); }
+
+    .visit-copy h2 {
+      margin-bottom: 18px;
+      color: var(--deep-blue);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.055em;
+    }
+
+    .address {
+      margin-bottom: 24px;
+      color: var(--muted);
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 12px;
+      margin: 0 0 27px;
+    }
+
+    .contact-list a {
+      color: var(--deep-blue);
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .map-panel {
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      padding: 35px;
+      text-align: center;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(5, 82, 120, 0.92), rgba(8, 124, 167, 0.74)),
+        url("pool-aerial.jpg") center / cover;
+    }
+
+    .map-panel .pin {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 2.5rem;
+    }
+
+    .map-panel h3 {
+      margin-bottom: 9px;
+      font-size: 1.7rem;
+    }
+
+    .map-panel p {
+      max-width: 320px;
+      margin: 0 auto 22px;
+      color: rgba(255,255,255,0.82);
+    }
+
+    footer {
+      padding: 34px 0;
+      color: rgba(255,255,255,0.85);
+      background: #063c59;
+      font-size: 0.92rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    footer a { color: white; text-decoration: none; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 30px, 600px); }
+
+      .topbar-inner {
+        justify-content: center;
+        min-height: 38px;
+        font-size: 0.8rem;
+      }
+
+      .topbar-inner span:first-child { display: none; }
+
+      .nav { min-height: 72px; }
+      .brand img { width: 48px; height: 48px; }
+      .menu-toggle { display: block; }
+
+      .nav-links {
+        position: absolute;
+        top: 72px;
+        right: 15px;
+        left: 15px;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px;
+        border: 1px solid #e4eff2;
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+      }
+
+      .nav-links.open { display: flex; flex-direction: column; }
+
+      .nav-links a {
+        padding: 12px;
+        border-radius: 10px;
+      }
+
+      .nav-links a:hover { background: #f0f8fa; }
+      .nav-links .button { margin-top: 7px; }
+
+      .hero { min-height: 590px; background-position: 57% center; }
+      .hero-content { padding: 78px 0 95px; }
+      h1 { font-size: clamp(3.2rem, 15vw, 5rem); }
+
+      .facts-card { grid-template-columns: 1fr; }
+      .fact { padding: 18px 20px; }
+      .fact + .fact { border-top: 1px solid #e7eff1; border-left: 0; }
+
+      section { padding: 75px 0; }
+      .experience, .event-card, .visit-card { grid-template-columns: 1fr; }
+      .experience { gap: 38px; }
+      .experience-photo, .experience-photo img { min-height: 330px; height: 330px; }
+      .photo-note { right: 10px; bottom: 12px; }
+      .ticket-grid { grid-template-columns: 1fr; }
+      .event-card img { min-height: 270px; max-height: 330px; }
+      .gallery-grid { grid-auto-rows: 150px; gap: 9px; }
+      .gallery-grid figure:nth-child(1) { grid-column: span 12; grid-row: span 2; }
+      .gallery-grid figure:nth-child(2),
+      .gallery-grid figure:nth-child(3) { grid-column: span 6; }
+      .gallery-grid figure:nth-child(n+4) { grid-column: span 6; }
+      .map-panel { min-height: 310px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="wrap topbar-inner">
+      <span>Day visits, poolside relaxation &amp; special events</span>
+      <span><a href="tel:+27839407991">Call / WhatsApp: 083 940 7991</a></span>
+    </div>
+  </div>
+
+  <header>
+    <nav class="wrap nav" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Macece Resort home">
+        <img src="macece-logo.jpg" alt="Macece Resort logo" />
+        <span>Macece Resort</span>
+      </a>
+
+      <button class="menu-toggle" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+
+      <div class="nav-links">
+        <a href="#experience">The Resort</a>
+        <a href="#tickets">Day Tickets</a>
+        <a href="#events">Events</a>
+        <a href="#gallery">Gallery</a>
+        <a class="button" href="#contact">Plan your visit</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap">
+        <div class="hero-content">
+          <p class="eyebrow">Your day out starts here</p>
+          <h1>Make a splash. Make a day of it.</h1>
+          <p>
+            A refreshing escape for family and friends. Enjoy our pools, relax
+            poolside, and join us for special events at Macece Resort.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#tickets">See day ticket prices <span>→</span></a>
+            <a class="button outline" href="#gallery">Explore the resort</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="wrap quick-facts" aria-label="Resort highlights">
+      <div class="facts-card">
+        <div class="fact">
+          <strong>Poolside days</strong>
+          <span>Come for the day and enjoy the water</span>
+        </div>
+        <div class="fact">
+          <strong>Family friendly</strong>
+          <span>A place to relax and spend time together</span>
+        </div>
+        <div class="fact">
+          <strong>Events &amp; artists</strong>
+          <span>Special occasions with local talent</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="experience">
+      <div class="wrap experience">
+        <div class="experience-photo">
+          <img src="pool-clean.jpg" alt="Pool and green lawn at Macece Resort" />
+          <div class="photo-note">A little sunshine, a lot of poolside time.</div>
+        </div>
+        <div class="experience-copy">
+          <p class="eyebrow">Welcome to Macece</p>
+          <h2>Where wanderlust meets relaxation</h2>
+          <p>
+            Find your own pace at Macece Resort. Take a swim, settle in by the
+            pool, and enjoy an easy-going day out in Ka-Mchipisi.
+          </p>
+          <ul class="check-list">
+            <li>Swimming pools and open poolside spaces</li>
+            <li>Day access for adults and children</li>
+            <li>Family days and occasional live entertainment</li>
+          </ul>
+          <a class="button blue" href="#contact">Get in touch to plan your visit</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="tickets" id="tickets">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">Your day, your way</p>
+          <h2>Simple day access</h2>
+          <p>Enjoy a day at the resort with affordable entry for the whole family.</p>
+        </div>
+        <div class="ticket-grid">
+          <article class="ticket-card">
+            <small>Child ticket</small>
+            <strong>R50</strong>
+            <p>Day access for kids</p>
+          </article>
+          <article class="ticket-card">
+            <small>Adult ticket</small>
+            <strong>R70</strong>
+            <p>Day access for adults</p>
+          </article>
+        </div>
+        <p class="ticket-note">For ticket and visit enquiries, call or WhatsApp us before you come.</p>
+      </div>
+    </section>
+
+    <section class="events" id="events">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">Good times together</p>
+          <h2>More than a pool day</h2>
+          <p>We host special events from time to time, bringing friends, families and local artists together.</p>
+        </div>
+        <article class="event-card">
+          <img src="pool-event.jpg" alt="Guests enjoying a day at Macece Resort" />
+          <div class="event-copy">
+            <p class="eyebrow">A recent highlight</p>
+            <h3>Family day with live entertainment</h3>
+            <p>
+              Our last family day welcomed Benny Mayengani and several local
+              artists for a lively day of music, swimming and good company.
+              Keep in touch with Macece Resort for news about future events.
+            </p>
+            <a class="button blue" href="https://wa.me/27839407991">Ask us about upcoming events</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">Take a look around</p>
+          <h2>A glimpse of Macece</h2>
+          <p>Bright pool days, space to unwind, and plenty of room to enjoy the sunshine.</p>
+        </div>
+        <div class="gallery-grid">
+          <figure>
+            <img src="pool-wide.jpg" alt="Wide view across the resort swimming pools" />
+            <figcaption>Poolside afternoons</figcaption>
+          </figure>
+          <figure>
+            <img src="pool-sunset.jpg" alt="The pool area at sunset" />
+            <figcaption>Golden-hour glow</figcaption>
+          </figure>
+          <figure>
+            <img src="pool-aerial.jpg" alt="Aerial view of Macece Resort" />
+            <figcaption>Room to relax</figcaption>
+          </figure>
+          <figure>
+            <img src="pool-umbrellas.jpg" alt="Poolside umbrellas and seating" />
+            <figcaption>Find your spot</figcaption>
+          </figure>
+          <figure>
+            <img src="pool-family.jpg" alt="Guests spending time by the pool" />
+            <figcaption>Make it a family day</figcaption>
+          </figure>
+          <figure>
+            <img src="resort-gate.jpg" alt="Entrance to Macece Resort" />
+            <figcaption>Welcome to Macece</figcaption>
+          </figure>
+          <figure>
+            <img src="pool-another-view.jpg" alt="Another view of the swimming pool area" />
+            <figcaption>Your day out awaits</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="visit" id="contact">
+      <div class="wrap visit-card">
+        <div class="visit-copy">
+          <p class="eyebrow">Come spend the day</p>
+          <h2>We’ll see you poolside.</h2>
+          <p class="address">
+            After Madzahisi College,<br />
+            Ka-Mchipisi, South Africa
+          </p>
+          <div class="contact-list">
+            <a href="tel:+27839407991">Call / WhatsApp: 083 940 7991</a>
+            <a href="mailto:maceceresort@gmail.com">maceceresort@gmail.com</a>
+          </div>
+          <a class="button" href="https://wa.me/27839407991">Book or enquire on WhatsApp</a>
+        </div>
+        <div class="map-panel">
+          <div>
+            <span class="pin" aria-hidden="true">📍</span>
+            <h3>Find Macece Resort</h3>
+            <p>After Madzahisi College, Ka-Mchipisi, South Africa</p>
+            <a class="button outline" href="https://www.google.com/maps/search/?api=1&query=Macece+Resort+Ka-Mchipisi+South+Africa">
+              Open directions
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© <span id="year"></span> Macece Resort</span>
+      <span>Where wanderlust meets relaxation</span>
+      <a href="mailto:maceceresort@gmail.com">Get in touch</a>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.querySelector(".menu-toggle");
+    const navLinks = document.querySelector(".nav-links");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
+      menuButton.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.setAttribute("aria-label", "Open navigation menu");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
